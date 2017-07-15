@@ -1,7 +1,9 @@
-package com.rxandroid.elice.skeletonpj.module;
+package com.rxandroid.elice.skeletonpj.data.net;
 
-import com.rxandroid.elice.skeletonpj.repository.ImageRepository;
-import com.rxandroid.elice.skeletonpj.util.constant.WoConstant;
+import android.content.Context;
+
+import com.readystatesoftware.chuck.ChuckInterceptor;
+import com.rxandroid.elice.skeletonpj.data.repository.ImageRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,9 +19,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
 
+    private Context context;
+
+    public RestClient(Context context) {
+        this.context = context;
+    }
+
     public ImageRepository getImageRepository(){
         return new Retrofit.Builder()
-                .baseUrl(WoConstant.BASE_URL)
+                .baseUrl(EliceConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(getOkHttpClient())
@@ -29,6 +37,7 @@ public class RestClient {
     private OkHttpClient getOkHttpClient() {
         return new OkHttpClient.Builder()
                 .connectTimeout(59, TimeUnit.SECONDS)
+                .addInterceptor(new ChuckInterceptor(context))
                 .addInterceptor(new HttpLoggingInterceptor())
                 .writeTimeout(59, TimeUnit.SECONDS)
                 .readTimeout(59, TimeUnit.SECONDS)

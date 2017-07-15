@@ -1,4 +1,4 @@
-package com.rxandroid.elice.skeletonpj.model;
+package com.rxandroid.elice.skeletonpj.data.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by elice.kim on 2017. 7. 15..
  */
 
-public class DaumImageModel {
+public class DaumImageDTO {
 
     @SerializedName("channel")
     @Expose
